@@ -117,4 +117,29 @@
 
 - jsx中不允许写语句，只可以写表达式
 
-# 
+# React面向组件编程
+
+- React中有两种组件
+  - 函数式组件
+  - 类式组件
+
+## 函数式组件
+
+- 首字母必须大写
+
+- 适用于简单组价
+
+- ```jsx
+  const MyComponent = () => {
+        return <h2>这是我的第一个函数式组件</h2>
+      }
+      ReactDOM.render(<MyComponent />, document.querySelector('#test'));
+  ```
+
+- 函数式组件中的this指向是undefined
+
+- 当babel翻译后，会自动开启js严格模式
+
+- 执行了ReactDOM.render之后，React会解析组件标签，找到了MyComponent组件，然后发现该组件是函数式的，随后调用该函数，然后将该函数返回的虚拟DOM，转为真实DOM，渲染到页面上
+
+## 
