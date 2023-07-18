@@ -315,7 +315,6 @@
     axios.post(url, [data, config]);
     ```
 
-- 
 
 ## 使用方式
 

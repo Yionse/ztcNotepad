@@ -181,7 +181,7 @@ const x = new Vue({
 - 键盘事件
   - ![image-20230505181056676](C:\Users\ZhangTiancheng\AppData\Roaming\Typora\typora-user-images\image-20230505181056676.png)
   - 通过在事件后加.enter去触发
-  - 如果需要自定义的键盘事件，则先通过事件对象e.key获得这个键的名字，然后使用.连接在事件名的后面，并且，如果这个键是组合单词的话，那么就需要变换为小写，然后中间用-
+  - 如果需要自定义的键盘事件，则先通过事件对象e.key获得这个键的名字，然后使用.连接在事件名的后面，并且，如果这个键是组合单词的话，那么就需要变换为小写，然后中间用
     - ![image-20230505181825101](C:\Users\ZhangTiancheng\AppData\Roaming\Typora\typora-user-images\image-20230505181825101.png)
     - ![image-20230505181521063](C:\Users\ZhangTiancheng\AppData\Roaming\Typora\typora-user-images\image-20230505181521063.png)
     - 当使用tab键触发事件时，需要使用keydown去触发，由于tab默认会将元素的焦点切换至下一个元素，所以如果用up，在元素触发事件时，焦点已经切换，就无法获得该元素的值
@@ -246,9 +246,9 @@ const x = new Vue({
         </button>
     </div>
     ```
-
-- 新添加一个配置项，watch，是一个对象，其中每个key都是要监视的对象，不仅可以监视data中的数据，也可以监视计算属性中的数据
-
+    
+    - 新添加一个配置项，watch，是一个对象，其中每个key都是要监视的对象，不仅可以监视data中的数据，也可以监视计算属性中的数据
+    
   - ```js
     new Vue ({
         watch: {

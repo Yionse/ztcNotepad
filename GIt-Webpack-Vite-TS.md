@@ -255,5 +255,3 @@
   - 接口也可以作为泛型
     - <img src="C:\Users\ZhangTiancheng\AppData\Roaming\Typora\typora-user-images\image-20230613125516555.png" alt="image-20230613125516555" style="zoom:67%;" />
     - 类型必须是inter的子类
-- 
-
