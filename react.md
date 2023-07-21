@@ -308,3 +308,87 @@
   ```
 
 - 这就类似于是直接在操作state数据，但其实并不是的
+
+- 目前开发中没有使用
+
+# 状态管理
+
+- **对 React 来说重要的是组件在 UI 树中的位置,而不是在 JSX 中的位置！**
+
+## 构建state规则
+
+- **合并关联的 state**。如果你总是同时更新两个或更多的 state 变量，请考虑将它们合并为一个单独的 state 变量。
+- **避免互相矛盾的 state**。当 state 结构中存在多个相互矛盾或“不一致”的 state 时，你就可能为此会留下隐患。应尽量避免这种情况。
+- **避免冗余的 state**。如果你能在渲染期间从组件的 props 或其现有的 state 变量中计算出一些信息，则不应将这些信息放入该组件的 state 中。
+- **避免重复的 state**。当同一数据在多个 state 变量之间或在多个嵌套对象中重复时，这会很难保持它们同步。应尽可能减少重复。
+- **避免深度嵌套的 state**。深度分层的 state 更新起来不是很方便。如果可能的话，最好以扁平化方式构建 state。
+- **注意不要将props再使用useState**，如果父组件重新传入一个porps，则组件中的state将不会重新更新
+- **如果你想在重新渲染时保留 state，几次渲染中的树形结构就应该相互“匹配”**
+- 指定一个 `key` 能够让 React 将 `key` 本身而非它们在父组件中的顺序作为位置的一部分。这就是为什么尽管你用 JSX 将组件渲染在相同位置，但在 React 看来它们是两个不同的计数器。因此它们永远都不会共享 state。每当一个计数器出现在屏幕上时，它的 state 会被创建出来。每当它被移除时，它的 state 就会被销毁。在它们之间切换会一次又一次地使它们的 state 重置
+
+# Context 深层传递参数
+
+- Context 让父组件可以为它下面的整个组件树提供数据
+
+## 步骤
+
+- 创建context
+
+  - ```tsx
+    import { createContext } from 'react';
+    const LevelContext = createContext(1);
+    ```
+
+  - 可以传递任何类型的值（甚至可以传入一个对象）
+
+- 使用context
+
+  - ```tsx
+    import { useContext } from 'react';
+    const level = useContext(LevelContext);
+    ```
+
+  - 这样即可得到
+
+# useRef
+
+- 可以生成一个不会被React更新的数据，通过对象的形式返回
+
+  - ```tsx
+    { 
+      current: 0 // 你向 useRef 传入的值
+    }
+    ```
+
+  - 会返回一个上述对象
+
+- 与state的区别，它被更改时，不会重新渲染页面
+
+- ref 是一个应急方案，用于保留不用于渲染的值。 你不会经常需要它们。
+
+- ref 是一个普通的 JavaScript 对象，具有一个名为 `current` 的属性，你可以对其进行读取或设置。
+
+- 你可以通过调用 `useRef` Hook 来让 React 给你一个 ref。
+
+- 与 state 一样，ref 允许你在组件的重新渲染之间保留信息。
+
+- 与 state 不同，设置 ref 的 `current` 值不会触发重新渲染。
+
+- 不要在渲染过程中读取或写入 `ref.current`。这使你的组件难以预测。
+
+## 使用ref获取页面上的DOM节点
+
+- 生成一个ref对象
+- 然后将这个ref对象，绑定到对应的DOM结构的ref属性上
+
+## forwardRef
+
+- 将访问另一个组件的DOM节点
+
+- ```tsx
+  const MyInput = forwardRef((props, ref) => {
+    return <input {...props} ref={ref as any} />;
+  });
+  ```
+
+- 
