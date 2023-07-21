@@ -302,3 +302,41 @@
         return a + b
     }	//	使用接口时函数定义为箭头函数
     ```
+
+# 类型断言 | 联合类型 | 交叉类型
+
+- 联合类型
+
+  - 一个变量可能为两种类型，中间使用  |   进行分隔
+
+  - ```ts
+    const myPhone : string | number;
+    ```
+
+- 交叉类型
+
+  - 多种类型的集合
+
+  - ```ts
+    interface One {
+        one : string
+    }
+    
+    interface Two {
+        two : number
+    }
+    
+    const test = (value : One & Two) {
+        console.log(One.one, Two.two)
+    }
+    
+    test({one : '111', two : 10});
+    ```
+
+- 类型断言
+
+  - ```ts
+    值 as 类型，或 <类型>值
+    ```
+
+- 
