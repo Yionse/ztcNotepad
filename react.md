@@ -479,3 +479,137 @@
   ```
 
 - 还可以添加规则，比如必填项等
+
+# React-router
+
+- 安装
+
+  - ```js
+    yarn add react-router-dom@6
+    ```
+
+- 要使用React-router要引入一些组件
+
+  - ```tsx
+    import { BrowserRouter, Routes, Route, Link } from 'react-router-dom'
+    ```
+
+  - BrowserRouter-声明当前要使用一个非hash模式的路由
+
+  - Link-指定跳转的组件，to属性用来配置路由地址
+
+  - Routes-路由出口，所有的组件被Routes包裹
+
+  - Route-指定组件和路由的对应关系，path对应地址，element对应组件
+
+## 核心组件
+
+- HashRouter-代表着Hash模式的路由
+
+- BrowserRouter-代表History模式的路由
+
+- 推荐使用History模式
+
+- Link-用于指定导航链接完成路由跳转，最终会被渲染成一个a链接
+
+  - 会有一个to属性，指定要跳转的路由
+
+- Routes-提供路由出口，将所有的出口写在里面
+
+- Route-匹配路由指定要展示的组件
+
+  - path匹配对应的路由，当配对成功后，会渲染element指定的组件
+  - 与Link是一个对应的组件
+
+- ```tsx
+  <BrowserRouter>
+  	<Link></Link>
+  	<Link></Link>
+      <Routes>
+      	<Route></Route>
+      	<Route></Route>
+      </Routes>
+  </BrowserRouter>
+  ```
+
+## 编程式导航
+
+- 使用useNavigate得到一个对象，通过这个对象完成路由跳转
+
+- ```tsx
+  const navigate = useNavigate();
+  navigate(path, {});	//	path代表着要跳转的路由，第二个是一个配置对象，当配置为replace为true时则不会留下记录
+  ```
+
+- 携带参数
+
+  - searchParams直接将数据写在url中，就是query参数
+
+  - 通过useSearchParams取值
+
+    - ```tsx
+      navagite('/login?id=1001');
+      let [params] = useSearchParmas();
+      const id = params.get('id');
+      ```
+
+  - 通过params传参
+
+  - 需要提前在Route中定义好占位符
+
+    - ```tsx
+      <Route path='/login/:id'></Route>
+      ```
+
+  - 通过useParmas取值
+
+    - ```tsx
+      navigate('/login/1001');
+      let params = useParams();
+      const id == params.id;
+      ```
+
+## 嵌套路由
+
+- 需要嵌套路由的话直接嵌套在Route组件中
+
+- ```tsx
+  <BrowserRouter>
+  	<Link></Link>
+  	<Link></Link>
+      <Routes>
+      	<Route>
+         		//	嵌套路由二级路由
+              <Route></Route>
+              <Route></Route>
+         </Route>
+      	<Route></Route>
+      </Routes>
+  </BrowserRouter>
+  ```
+
+- 需要注意的是，不仅仅需要配置，还需要在对应的一级路由中，配置路由出口
+
+- ```tsx
+  return (
+  	<div>
+          //	二级路由的出口
+      	<Outlet></Outlet>
+      </div>
+  );
+  ```
+
+- 添加默认路由的方法是直接将path属性删掉，添加一个index关键字
+
+  - ```tsx
+    <Route index></Route>	//	则是默认路由
+    ```
+
+## 404路由配置
+
+- 直接将path路由设置为*，放置在所有路由的最下面，然后将需要显示的404页面设置在element属性中
+
+- ```tsx
+  <Route path="*" element={<NotFound></NotFound>}></Route>
+  ```
+
