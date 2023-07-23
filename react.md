@@ -216,6 +216,74 @@
 
 - setState可以是一个具体的值，也可以是一个更新函数，这个函数会有一个参数n，它是上一次的结果
 
+- useState也可以接收一个函数，这个函数必须有一个返回值，这个返回值就是state的值
+
+## useEffect
+
+- 为了解决副作用
+
+- 将Ajax请求、操作DOM、localStorage等操作放在useEffect中
+
+- 当通过修改状态，更新组件时，useEffect中的函数就会执行一次，副作用也会不断执行
+
+- ```ts
+  import { useEffect } from 'react';
+  function App() {
+      useEffect( () => {
+        //	这里面的语句每次页面更新都会执行  
+      } );
+  }
+  ```
+
+- 通过依赖项控制副作用执行时机
+
+  - 默认状态-组件初始化时，执行一次，然后当页面更新时，会再次执行
+
+  - 添加空数组-只会执行一次，就是首次
+
+  - 添加特定依赖项-在数组中加入依赖的项，每次当依赖项改变时，执行该函数
+
+    - ```ts
+      import { useEffect } from 'react';
+      function App() {
+          useEffect( () => {
+          }, [count] );		//	只有当count发生改变时，才会执行里面的函数
+      }
+      ```
+
+- 当在useEffect中用到了数据状态，就应该出现在数组依赖项中进行声明，否则会出现bug
+
+- 在useEffect中，添加一个return，返回一个函数，在函数体中做清楚副作用
+
+  - ```ts
+    function App () {
+        useEffect(() => {
+    		let timer = setIntervar(() => {
+                //	做一些操作
+            }, 1000);
+            return () => {
+                clearInterval(timer)
+            }
+        });
+    }
+    ```
+
+  - 如果不做清除的话，那么当组件被销毁时，定时器还是在运行，这样会浪费性能
+
+- 注意使用useEffect发送网络请求时，不要直接卸载useEffect的参数函数上，会导致垃圾清理问题，争取的做法是，在匿名函数内，重新再定义一个具名函数
+
+  - ```tsx
+    function App() {
+        useEffect(() => {
+            async function getList() {
+                //	发送请求
+            }
+        });
+    }
+    ```
+
+- 
+
 ## 渲染
 
 - 当需要频繁的更新顶层组件时，这会带来性能问题，因为这将导致React频繁的递归的重新渲染下面的子组件，但子组件的状态可能并未发生修改
@@ -349,6 +417,8 @@
     ```
 
   - 这样即可得到
+  
+- Context甚至可以在顶层的APP中往下传递
 
 # useRef
 
@@ -379,7 +449,7 @@
 ## 使用ref获取页面上的DOM节点
 
 - 生成一个ref对象
-- 然后将这个ref对象，绑定到对应的DOM结构的ref属性上
+- 然后将这个ref对象，绑定到对应的DOM结构的ref 属性上
 
 ## forwardRef
 
@@ -391,4 +461,21 @@
   });
   ```
 
-- 
+
+# Prop类型校验
+
+- 安装PropTypes包
+
+- 引入PropTypes
+
+- 使用组件名.PropTYpes定义所需类型
+
+- ```tsx
+  import PropTypes from 'prop-types'
+  Component.propTypes = {
+      属性：类型.isRequired
+      //	isRequired则代表着必填
+  }
+  ```
+
+- 还可以添加规则，比如必填项等
