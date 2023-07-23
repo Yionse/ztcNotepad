@@ -613,3 +613,97 @@
   <Route path="*" element={<NotFound></NotFound>}></Route>
   ```
 
+# Mobx
+
+- 类似于Vue和Vuex
+
+- 需要安装两个库
+
+  - garn add mobx mobx-react-lite
+
+- 编写Store
+
+- ```tsx
+  import { makeAboutObserve } from 'mobx';
+  class CounterSotre {
+      count = 0;
+      consreuctor() {
+          //	把数据弄成响应式
+          makeAboutObserve(this);
+      }
+    //	定义action函数
+      add () {
+          this.count++;
+      }
+  }
+  const counterStore = new CounterStore();
+  export default counterStore;
+  ```
+
+- 使用
+
+- ```tsx
+  import counterStore from './Store/CounterStore';
+  import { observe } from 'mobx-react-lite';
+  function App () {
+      return (
+      	<div>
+          	{counterStore.count}
+              <button onClick = {counterStore.add}></button>
+          </div>
+      );
+  }
+  //	最重要的一步，进行响应式设置
+  export default observe(App);
+  ```
+
+## 计算属性
+
+- 首先需要有一个已经存在的数据
+
+- 定义computed
+
+  - ```tsx
+    get filterList() {
+        return this.list.filter(item => item.id === '001');
+    }
+    ```
+
+  - 这样就定义好了一个计算属性
+
+- 如果可以的话可以在makeAboutObserve 中进行声明，某个属性是一个计算属性，但是不计算也可以
+
+## Mobx模块化
+
+- 分贝定义好两个Store模块，然后导出即可，注意导出的时候不需要进行实例化，直接导出类即可
+
+  - ```tsx
+    class CounterStore {
+        
+    }
+    export {CounterStore}
+    ```
+
+- 定义一个管理的index.js文件，统一管理所有的Store
+
+  - ```tsx
+    class RootStore {
+        constructor() {
+    		this.counterStore = new CounterStore();
+        }
+    }
+    
+    ```
+
+  - 然后可以利用createContext，useContext，最后利用useStore导出即可
+
+    - ```tsx
+      const rootStore = new RootStore();
+      const context = React.createContext(rootStore);
+      const useStore = () => React.useContext(context);
+      export default useStore
+      ```
+
+  - 也可以直接将实例化的对象导出
+
+- 
