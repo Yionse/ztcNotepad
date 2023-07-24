@@ -619,7 +619,7 @@
 
 - 需要安装两个库
 
-  - garn add mobx mobx-react-lite
+  - yarn add mobx mobx-react-lite
 
 - 编写Store
 

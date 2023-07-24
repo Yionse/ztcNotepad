@@ -1,24 +1,49 @@
 # Git
 
 - git pull将远程仓库中的文件，与本地仓库进行同步
+
 - git -v 查看当前git的版本
+
 - git clone git地址，将远程仓库克隆到本地
+
 - git init 将当前文件夹，初始化为一个git仓库，成功后，多了一个.git文件夹
+
 - git config [--global] user.name 进行配置文件设置，添加了global以后是全局的
+
 - git status， 暂存区的状态
+
 - git add 文件名， 将文件添加到暂存区
+
 - git rm --cached 文件名，将暂存区的文件删除掉
+
 - git commit -m'描述'，将文件提交
+
 - git log [--online，一行显示]查看日志
+
 - git restore 文件名，将在本地删除的文件，进行恢复
+
 - git reset --hard 版本号，这样即使是上一个方法无法恢复，通过该方法也可以进行恢复，但是需要通过 git log查看提交的版本号
+
 - git revert 版本号，还原到这个版本号之前，包括提价记录也都还原，reset重置后，提交记录不可见了
+
 - git branch 创建分支，但必须存在commit之后
+
 - git branch -v，查看当前所有的分支
+
 - git checkout 分支名，切换分支
+
 - git checkout -b 分支名，创建一个分支，且切换为当前分支
+
 - git branch -d 分支名，删除分支
+
 - git merge 分支名，将分支与master进行合并，但需要当前处在master分支下
+
+- ```tsx
+  git checkout -b jimmy/gobang	//	创建一个新的分支，且切换到这个分支下
+  git add .
+  git commit -m''
+  git push -u origin 分支名	//即可推送成功
+  ```
 
 # Webpack
 
