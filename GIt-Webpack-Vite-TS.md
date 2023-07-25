@@ -52,8 +52,7 @@
   - git cherry-pick c1,c2
 
 - git rebase -i HEAD~4 --- 这会出现一个UI界面，将可以拖动，然后复制到一个主分支下
-
-- 
+- 修改了远程分支
 
 ## 分支
 
