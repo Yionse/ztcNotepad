@@ -652,7 +652,7 @@
               <button onClick = {counterStore.add}></button>
           </div>
       );
-  }
+  }	
   //	最重要的一步，进行响应式设置
   export default observe(App);
   ```

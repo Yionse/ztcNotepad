@@ -42,7 +42,7 @@
   git checkout -b jimmy/gobang	//	创建一个新的分支，且切换到这个分支下
   git add .
   git commit -m''
-  git push -u origin 分支名	//即可推送成功
+  git push -u origin 分支名	//即可推送成功，在本地创建的分支，但是远程没有时，使用该命令
   ```
   
 - git pull --rebase origin 分支名，当远程分支发生更改时，需要将远程的同步到本地，然后再进行提交，就使用此命令
