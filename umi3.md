@@ -69,8 +69,7 @@
         wrappers : //	指向一个组件，在这个组件中进行路由验证
         title : //	配置当前页面的标题
     }];
-```
-    
+    ```
   
 - 约定式路由无需在routes中配置，只需要按照约定，将.tsx文件放在指定位置就可以直接通过地址访问
 
@@ -85,12 +84,113 @@
 ## 路由验证
 
 - 在route中配置一个选项wrappers，它指向一个组件
+
 - 当给一个路由配置了wrappers时，再此访问这个路由时，则会跳转到wrappers所指向的路由，然后这里面可以进行操作，是否展示原本的组件
+
 - 这样就形成了路由验证
+
+- ```tsx
+  //	需要验证的路由
+  import React from 'react'
+  
+  function User() {
+    return <>user profile</>
+  }
+  
+  User.wrappers = ['@/wrappers/auth']
+  
+  export default User
+  ```
+
+- ```tsx
+  //	@/wrappers/auth 中
+  import { Redirect } from 'umi'
+  
+  export default (props) => {
+    const { isLogin } = useAuth();
+    if (isLogin) {
+      return <div>{ props.children }</div>;
+    } else {
+      return <Redirect to="/login" />;
+    }
+  }
+  ```
 
 ## 页面跳转
 
 - 可以将umi中的History解构出来使用，也可以使用useHistory来使用
 - 可以使用push和goBack方法进行路由跳转
 - Link组件，可以有一个to属性，进行路由跳转，但只能跳转内部路由，外部链接使用a
+
+# 约定式路由
+
+- 约定 `[]` 包裹的文件或文件夹为动态路由
+
+  - ```tsx
+    src/pages/users/[id].tsx 会成为 /users/:id
+    src/pages/users/[id]/settings.tsx 会成为 /users/:id/settings
+    ```
+
+- 当存在如下文件结构时
+
+  - ```bash
+    .
+      └── pages
+        └── [post]
+          ├── index.tsx
+          └── comments.tsx
+        └── users
+          └── [id].tsx
+        └── index.tsx
+    ```
+
+  - 生成的路由结构如下
+
+    - ```tsx
+      [
+        { exact: true, path: '/', component: '@/pages/index' },
+        { exact: true, path: '/users/:id', component: '@/pages/users/[id]' },
+        { exact: true, path: '/:post/', component: '@/pages/[post]/index' },
+        {
+          exact: true,
+          path: '/:post/comments',
+          component: '@/pages/[post]/comments',
+        },
+      ];
+      ```
+
+- 404路由，当路由没有被匹配时，则会显示到404页面
+
+  - ```tsx
+    	{ component: '@/pages/404' },
+    ```
+
+# 页面跳转
+
+## 声明式
+
+- 通过 Link 使用，通常作为 React 组件使用。
+
+- ```tsx
+  import { Link } from 'umi';
+  export default () => (  <Link to="/list">Go to list page</Link>);
+  ```
+
+## 命令式
+
+- 通过 history 使用，通常在事件处理中被调用。
+
+- ```js
+  import { history } from 'umi';
+  function goToListPage() {  history.push('/list');}
+  ```
+
+- 也可以直接从组件的属性中取得 history
+
+- ```tsx
+  export default (props) => (
+    <Button onClick={()=>props.history.push('/list');}>Go to list page</Button>
+  );
+  ```
+
 - 
