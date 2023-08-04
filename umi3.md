@@ -199,3 +199,37 @@
 ## dynamic
 
 - 当存在一个巨大开销的组件，且不在首屏显示，这会导致首屏渲染时间较长，这个时候可以将该组件拆分出来
+
+# 插件
+
+## plugin-model
+
+- 一种基于 `hooks` 范式的简易数据管理方案（部分场景可以取代 `dva`），通常用于中台项目的全局共享数据。
+
+- 启用方式：在当前目录的src目录下，存在目录models，则启用
+
+- 约定在models目录下的每个js或ts文件，都是一个模块，它们都默认导出一个函数，该函数返回一些变量或者方法，可供全局使用，且状态共享
+
+  - ```js
+    import { useState } from 'react';
+    
+    export default function useTest() {
+      let [count, setCount]= useState<number>(0);
+      const addCount = () : void => {
+        setCount(count + 1);
+      }
+      return {
+        count,
+        addCount
+      }
+    }
+    //	需要注意的是，这里定义数据时，也需要定义成响应式的数据，否则不会触发页面重新解析
+    ```
+
+- 使用时通过useModel()方法，然后传入之前定义的model的文件名即可
+
+  - ```tsx
+    const { count, addCount } = useModel('test');
+    ```
+
+  - 然后count和addCount就可以在其中使用了
