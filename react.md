@@ -539,11 +539,27 @@
 
 # React-router
 
+- 使用vite构建工具创建一个项目
+  - yarn create vite react-demo --template react
+
 - 安装
 
   - ```js
     yarn add react-router-dom@6
     ```
+
+- 前期准备
+
+  - 在main.js中需要创建得到一个Router实例，然后将路由的配置对象放进去，最后以参数的形式传给RouterProvide组件
+
+  - ```jsx
+    const router = createBrowerRouter([{},{}]);  // 这里的对象则是路由配置信息，一般是键值对的形式，path表路径，element表组件,而一般会将对象给抽离出去，抽离为一个单独js文件
+    <React.StrictMode>
+        <RouterProvide router={router}/>
+    </React.StrictMode>
+    ```
+
+- createBrowserRouter生成History模式的路由，createHashRouter生成hash模式的路由
 
 - 要使用React-router要引入一些组件
 
