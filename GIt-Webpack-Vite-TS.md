@@ -53,6 +53,16 @@
 
 - git rebase -i HEAD~4 --- 这会出现一个UI界面，将可以拖动，然后复制到一个主分支下
 
+- git remote update  origin -p   将远程分支同步到本地
+
+- git remote add  索引名称 远程地址    新增一个.git仓库地址到本地
+
+- git remote rm 本地索引名称    删除本地仓库连接到远程仓库
+
+- git checkout -b 本地分支 origin/远程分支    将远程分支同步到本地分支
+
+- git pull --rebase origin -p    拉取新分支到本地
+
 
 ## 分支
 
