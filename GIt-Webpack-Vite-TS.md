@@ -64,6 +64,18 @@
 - git pull --rebase origin -p    拉取新分支到本地
 
 
+## github使用技巧
+
+- 当提交代码到github时，出现Connection was reset错误时，可能是由于本机使用了代理软件导致的
+
+- 可以输入如下的两行git命令进行重置代理，接口恢复正常
+
+  - ```git
+    git conifg --global --unset http.proxy
+    git config --global --unset https.proxy
+    ```
+
+
 ## 分支
 
 - git branch 分支名---创建分支，分支基于最近一次提交的记录，在切换分支之后，**需要进行切换分支的操作，否则还是会在主分支下进行操作**，
