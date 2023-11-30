@@ -74,6 +74,37 @@
     git conifg --global --unset http.proxy
     git config --global --unset https.proxy
     ```
+  
+- **新的解决办法**
+
+  - 创建ssh连接
+
+  - 在桌面打开git bash 看看是否存在着ssh秘钥
+
+    - ```git
+      ls -al ~/.ssh
+      ```
+
+    - 查看当前是否有ssh秘钥，如果有的话，可以直接使用这个，但建议新建一个
+
+  - 生成ssh秘钥
+
+    - ```git
+      ssh-keygen -t ed25519 -C "you_email@eample.com"
+      //后面部分代替为github的电子邮件地址
+      ```
+
+  - 然后一路回车
+
+  - 将秘钥复制下来
+
+    - ```git
+      clip < ~/.ssh/id_****.pub
+      ```
+
+    - 此时秘钥已经在剪贴板了，可以粘贴看看
+
+  - 在github中进行添加即可
 
 
 ## 分支
