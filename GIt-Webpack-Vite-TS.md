@@ -74,12 +74,14 @@
     git conifg --global --unset http.proxy
     git config --global --unset https.proxy
     ```
+    
+    
   
 - **新的解决办法**
 
   - 创建ssh连接
 
-  - 在桌面打开git bash 看看是否存在着ssh秘钥
+  - 在桌面打开git bash 看看是否存在着ssh秘钥(因为生成的秘钥默认生成在C盘的绝对路径下)
 
     - ```git
       ls -al ~/.ssh
@@ -105,6 +107,29 @@
     - 此时秘钥已经在剪贴板了，可以粘贴看看
 
   - 在github中进行添加即可
+  
+- 重要的一步，当本地存在了ssh秘钥，以及在github上配置好了以后，push的时候，其实发现还是无法成功，还是会出现以下两种错误
+
+  - ```git
+    Failure when receiving data from the peer
+    Recv failure: Connection was reset
+    ```
+
+- 导致这个的原因是因为本地仓库还没有更改远程连接的地址，还是使用的https协议 进行连接，实际上刚才配置的并没有生效
+
+- 将本地仓库更改为ssh连接步骤
+
+  - ```git
+    // 查看当前本地的remote
+    git remote -v
+    // 删除现有的remote
+    git remote remove 远程名
+    // 新增为ssh协议的仓库地址，在github中复制，记得选择ssh连接
+    // 例：git@github.com:Yionse/**********.git
+    // 原来使用https的下是以https://开头，现在使用了ssh
+    git remote add origin 远程名
+    // 此时设置完成，可以正确的push 和 pull操作了
+    ```
 
 
 ## 分支
