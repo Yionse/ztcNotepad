@@ -130,6 +130,30 @@
     git remote add origin 远程名
     // 此时设置完成，可以正确的push 和 pull操作了
     ```
+  
+- **遇到的问题**
+
+  - 今天在和往常一样，提交代码时，出现了一个错误
+
+  - ```git
+    kex_exchange_identification: read: Software caused connection abort
+    banner exchange: Connection to 198.18.0.177 port 22: Software caused connection abort
+    fatal: Could not read from remote repository.
+    
+    Please make sure you have the correct access rights
+    and the repository exists.
+    ```
+
+  - 大概的意思是22端口的问题，导致连接不成功。因为使用的是公司内网，我一开始将防火墙，以及公司的内网全部关掉，然后用手机开wifi却还是不行
+
+  - 后面再.ssh文件夹下面，添加一个配置文件，配置文件内容如下
+
+    - Host github.com
+      Hostname ssh.github.com
+      Port 443
+      User "2458015575@qq.com"
+
+  - 大概的意思应该是现在换成443端口连接，然后就可以了，就nm离谱
 
 
 ## 分支
