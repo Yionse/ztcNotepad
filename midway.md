@@ -337,6 +337,54 @@ export class ReportMiddleware implements IMiddleware<Context, NextFunction> {
   }
   ```
 
+# 服务和注入
+
+- 在业务中，只有控制器（Controller）的代码是不够的，一般来说会有一些业务逻辑被抽象到一个特定的逻辑单元中，我们一般称为服务（Service）。
+- 使用服务
+- 在 services 中的定义好对应的服务后，只需要在 Controller 中进行注入使用@inject，既可以使用了
+- @Provide 装饰器的作用：
+  1、这个 Class，被依赖注入容器托管，会自动被实例化（new）
+  2、这个 Class，可以被其他在容器中的 Class 注入
+- 而对应的 @Inject 装饰器，作用为：
+  1、在依赖注入容器中，找到对应的属性名，并赋值为对应的实例化对象
+
+```ts
+// service
+@Provide()
+export class UserService {
+  //...
+}
+// controller
+@Provide() // <------ 由于有 Controller 包含了 Provide 的能力，这里展示的更加完整
+@Controller("/api/user")
+export class APIController {
+  @Inject()
+  userService: UserService; // <------ 这里的类型是 Class，即会注入一个该类型的实例
+
+  //...
+}
 ```
 
+# 守卫
+
+- 守卫会根据运行时出现的某些条件（例如权限，角色，访问控制列表等）来确定给定的请求是否由路由处理程序处理。
+- Midway 使用 @Guard 装饰器标识守卫，示例代码如下。
+
+```ts
+import { IMiddleware, Guard, IGuard } from "@midwayjs/core";
+import { Context } from "@midwayjs/koa";
+@Guard()
+export class AuthGuard implements IGuard<Context> {
+  async canActivate(
+    context: Context,
+    supplierClz,
+    methodName: string
+  ): Promise<boolean> {
+    // ...
+  }
+}
 ```
+
+- canActivate 方法用于在请求中验证是否可以访问后续的方法，当返回 true 时，后续的方法会被执行，当 canActivate 返回 false 时，会抛出 403 错误码
+- 使用 `@UseGuard` 装饰器，我们可以应用到类和方法上，同时也可以在`@GET，@POST`等路由装饰器上执行
+- 全局守卫，可以在 configuration.ts 中使用 useGuard 方法添加
