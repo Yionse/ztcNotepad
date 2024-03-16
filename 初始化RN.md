@@ -23,6 +23,26 @@
 
 - 可根据官网步骤，但需要注意的是，官网默认安装的都是最新的包，可能会导致一些问题，但大多数都能通过降低或提升包的版本进行解决
 
+- 需要安装四个包
+
+  - ```bash
+    "@react-navigation/native": "^6.1.12",
+    "@react-navigation/native-stack": "^6.9.20",
+    "react-native-safe-area-context": "^4.9.0",
+    "react-native-screens": "^3.29.0",
+    ```
+
+- 还需要在Android/app/main/java/MainActivity.java中增加一个方法
+
+  - ```java
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+      super.onCreate(null)
+    }
+    //	在顶部引入
+    import android.os.Bundle;
+    ```
+
 ## 报错解决
 
 - > Task :app:checkDebugAarMetadata FAILED
